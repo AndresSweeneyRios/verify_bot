@@ -7,19 +7,27 @@ client.on('ready', ( ) => console.log(`Logged in as ${client.user.tag}!`))
 
 client.on('messageReactionAdd', async ( { message: { channel } }, user ) => {
     if (/rules/.test(channel.name)) {
-        await channel.guild
-            .member(user)
-            .addRole(process.env.ROLE)
-            .catch(console.error)
+        try {
+            const member = await channel.guild
+                .fetchMember(user)
+                
+            await member.addRole(process.env.ROLE)
+        } catch (error) {
+            console.error(error)
+        }
     }
 })
 
 client.on('messageReactionRemove', async ( { message: { channel } }, user ) => {
     if (/rules/.test(channel.name)) {
-        await channel.guild
-            .member(user)
-            .removeRole(process.env.ROLE)
-            .catch(console.error)
+        try {
+            const member = await channel.guild
+                .fetchMember(user)
+                
+            await member .removeRole(process.env.ROLE)
+        } catch (error) {
+            console.error(error)
+        }
     }
 })
 
