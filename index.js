@@ -9,7 +9,7 @@ client.on('messageReactionAdd', async ( { message: { channel } }, user ) => {
     if (/rules/.test(channel.name)) {
         await channel.guild
             .member(user)
-            .removeRole(process.env.ROLE)
+            .addRole(process.env.ROLE)
             .catch(console.error)
     }
 })
@@ -18,16 +18,16 @@ client.on('messageReactionRemove', async ( { message: { channel } }, user ) => {
     if (/rules/.test(channel.name)) {
         await channel.guild
             .member(user)
-            .addRole(process.env.ROLE)
+            .removeRole(process.env.ROLE)
             .catch(console.error)
     }
 })
 
-client.on('guildMemberAdd', async member => {
-    await member
-        .setRoles([ process.env.ROLE ])
-        .catch(console.error)
-});
+// client.on('guildMemberAdd', async member => {
+//     await member
+//         .setRoles([ process.env.ROLE ])
+//         .catch(console.error)
+// });
 
 client.on('raw', ({ d: data, t: event }) => {
     if (['MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE'].includes(event)) {
